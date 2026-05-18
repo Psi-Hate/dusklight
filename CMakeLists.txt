@@ -760,3 +760,16 @@ foreach (target IN LISTS BINARY_TARGETS)
 endforeach ()
 
 add_subdirectory(extern/dusklight-online)
+
+set(MODS_DEST "$ENV{APPDATA}/TwilitRealm/Dusklight/mods")
+
+add_custom_target(copy_mod ALL
+    COMMAND ${CMAKE_COMMAND} -E make_directory
+        "$ENV{APPDATA}/TwilitRealm/Dusklight/mods"
+
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        "${CMAKE_CURRENT_SOURCE_DIR}/mods/dusklight-online.dusk"
+        "$ENV{APPDATA}/TwilitRealm/Dusklight/mods"
+
+    DEPENDS dusklight-online
+)
