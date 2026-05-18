@@ -1,3 +1,6 @@
 [submodule "extern/aurora"]
 	path = extern/aurora
 	url = https://github.com/encounter/aurora.git
+[submodule "extern/dusklight-online"]
+	path = extern/dusklight-online
+	url = https://github.com/Psi-Hate/dusklight-online

@@ -759,4 +759,4 @@ foreach (target IN LISTS BINARY_TARGETS)
     endforeach ()
 endforeach ()
 
-add_subdirectory(tools/mod_test)
+add_subdirectory(extern/dusklight-online)
