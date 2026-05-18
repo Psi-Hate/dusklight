@@ -105,6 +105,7 @@ enum {
     fpcDwPi_OBJ_SMTILE_e,
     fpcDwPi_HORSE_e,
     fpcDwPi_ALINK_e,
+    fpcDwPi_LINKPUPPET_e,
     fpcDwPi_MIDNA_e,
     fpcDwPi_DMIDNA_e,
     fpcDwPi_KYTAG00_e,
