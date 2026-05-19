@@ -3,7 +3,14 @@
 #include "dusk/mod_loader.hpp"
 #include "mod_loader.hpp"
 
+#if defined(AURORA_DVD_HAS_OVERLAY)
+
+#include <algorithm>
+#include <cassert>
+#include <cstdlib>
 #include <cstring>
+#include <string>
+#include <vector>
 
 using namespace std::string_literals;
 
@@ -106,3 +113,21 @@ void ModLoader::initOverlayFiles() {
 }
 
 }  // namespace dusk
+
+#else
+
+namespace {
+
+aurora::Module Log("dusk::modLoader::overlay");
+
+}  // namespace
+
+namespace dusk {
+
+void ModLoader::initOverlayFiles() {
+    Log.warn("Aurora DVD overlay API unavailable; mod overlay files will not be mounted");
+}
+
+}  // namespace dusk
+
+#endif

@@ -23,6 +23,7 @@
 #include "d/d_path.h"
 #include "d/d_s_play.h"
 #include "d/d_debug_viewer.h"
+#include "dusk/mod_actor.hpp"
 #include "f_op/f_op_actor_mng.h"
 #include "f_op/f_op_camera_mng.h"
 #include "f_op/f_op_scene_mng.h"
@@ -2295,6 +2296,14 @@ void fopAcM_setEffectMtx(const fopAc_ac_c* i_actor, const J3DModelData* modelDat
 
 const char* fopAcM_getProcNameString(const fopAc_ac_c* i_actor) {
     s16 prof_name = fopAcM_GetProfName(i_actor);
+    if (prof_name == fpcNm_DUSK_MOD_ACTOR_e) {
+        const char* mod_actor_name =
+            dusk::modding::DuskModActors_GetDisplayName(const_cast<fopAc_ac_c*>(i_actor));
+        if (mod_actor_name != nullptr) {
+            return mod_actor_name;
+        }
+    }
+
     const char* name = dStage_getName2(prof_name, i_actor->argument);
     return name != NULL ? name : "UNKOWN";
 }

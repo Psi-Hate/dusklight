@@ -1,6 +1,7 @@
 #include "dusk/mod_loader.hpp"
 #include "dusk/hook_system.hpp"
 #include "dusk/logging.h"
+#include "dusk/mod_actor.hpp"
 #include "mod_loader.hpp"
 
 #include <RmlUi/Core.h>
@@ -277,6 +278,10 @@ static void* cb_service_get(const char* name) {
     return it != g_services.end() ? it->second : nullptr;
 }
 
+static DuskActorTypeId cb_actor_register_type(const DuskModActorDesc* desc) {
+    return dusk::modding::DuskModActors_Register(g_currentMod, desc);
+}
+
 static void api_hook_pre(void* addr, int32_t (*fn)(void* args)) {
     dusk::hookRegisterPre(addr, g_currentMod, fn);
 }
@@ -328,6 +333,13 @@ void ModLoader::buildAPI(LoadedMod& mod) {
     native.api.hook_dispatch_post = hookDispatchPost;
     native.api.service_publish = cb_service_publish;
     native.api.service_get = cb_service_get;
+    native.api.actor_register_type = cb_actor_register_type;
+    native.api.actor_spawn = modding::DuskModActors_Spawn;
+    native.api.actor_from_id = modding::DuskModActors_FromId;
+    native.api.actor_get_game_actor = modding::DuskModActors_GetGameActor;
+    native.api.actor_get_state = modding::DuskModActors_GetState;
+    native.api.actor_destroy = modding::DuskModActors_Destroy;
+    native.api.actor_destroy_by_id = modding::DuskModActors_DestroyById;
 }
 
 static std::unique_ptr<ModBundle> loadBundle(const std::filesystem::path& modPath, bool fromDir) {
@@ -616,15 +628,18 @@ void ModLoader::tick() {
             DuskLog.error(
                 "ModLoader: exception in {}.mod_tick(): {} — disabling", mod.metadata.id, e.what());
             mod.active = false;
+            modding::DuskModActors_UnregisterMod(&mod);
         } catch (...) {
             DuskLog.error("ModLoader: unknown exception in {}.mod_tick() — disabling", mod.metadata.id);
             mod.active = false;
+            modding::DuskModActors_UnregisterMod(&mod);
         }
     }
 }
 
 void ModLoader::shutdown() {
     for (auto& mod : m_mods) {
+        modding::DuskModActors_UnregisterMod(&mod);
         hookClearMod(&mod);
         if (mod.native && mod.native->fn_cleanup) {
             ModGuard guard(&mod);
@@ -636,6 +651,7 @@ void ModLoader::shutdown() {
     }
     m_mods.clear();
     g_services.clear();
+    modding::DuskModActors_Reset();
     DuskLog.info("ModLoader: all mods unloaded");
 }
 

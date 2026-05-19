@@ -1523,6 +1523,7 @@ set(DUSK_FILES
         src/dusk/OSThread.cpp
         src/dusk/OSMutex.cpp
         src/dusk/hook_system.cpp
+        src/dusk/modding/mod_actor.cpp
         src/dusk/modding/mod_loader.cpp
         src/dusk/modding/mod_loader_overlay.cpp
         src/dusk/modding/native_module.cpp

@@ -807,6 +807,7 @@ extern process_profile_definition g_profile_TITLE;
 extern process_profile_definition g_profile_WarpBug;
 #else
 extern actor_process_profile_definition g_profile_ALINK;
+extern actor_process_profile_definition g_profile_DUSK_MOD_ACTOR;
 extern actor_process_profile_definition g_profile_NO_CHG_ROOM;
 extern actor_process_profile_definition g_profile_ITEM;
 extern camera_process_profile_definition g_profile_CAMERA;
