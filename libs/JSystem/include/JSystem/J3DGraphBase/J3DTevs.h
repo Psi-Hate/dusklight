@@ -248,7 +248,7 @@ struct J3DTevSwapModeTable {
  * @ingroup jsystem-j3d
  * 
  */
-class J3DLightObj {
+DUSK_GAME_EXTERN class J3DLightObj {
 public:
     J3DLightObj() { mInfo = j3dDefaultLightInfo; }
     void load(u32) const;

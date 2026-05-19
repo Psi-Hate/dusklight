@@ -13,9 +13,9 @@
  * @ingroup jsystem-j3d
  *
  */
-struct J3DLightInfo {
-    bool operator==(J3DLightInfo& other) const;
-    J3DLightInfo& operator=(J3DLightInfo const&);
+DUSK_GAME_EXTERN struct J3DLightInfo {
+    DUSK_GAME_DATA bool operator==(J3DLightInfo& other) const;
+    DUSK_GAME_DATA J3DLightInfo& operator=(J3DLightInfo const&);
 
     // NOTE: Values big endian, need fixup at load
     // Actually, this class doesn't seem used?
